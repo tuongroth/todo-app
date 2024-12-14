@@ -1,0 +1,81 @@
+Exercise 12.8: Mongo Command-Line Interface  exercise12.9.txt
+
+Step 1: Run MongoDB
+- Verified that MongoDB is running by checking the status of containers with:
+  docker ps
+
+Step 2: Use docker exec to get inside the container
+- Ran the following command to access the MongoDB container's CLI:
+  docker exec -it custom-mongo mongosh -u root -p example
+
+Step 3: Open Mongo CLI
+- Connected to the Mongo CLI and authenticated successfully with:
+  mongosh -u root -p example
+
+Step 4: Show the available databases
+- Ran the following command to see the databases:
+  show dbs
+- Output:
+  admin         0.000GB
+  config        0.000GB
+  local         0.000GB
+  the_database  0.000GB
+
+Step 5: Switch to the correct database
+- Used the following command to switch to `the_database`:
+  use the_database
+
+Step 6: Show the collections
+- Ran the following command to view collections:
+  show collections
+- Output:
+  todos
+
+Step 7: View existing todos
+- Ran the following command to view existing todos:
+  db.todos.find({})
+- Output:
+  [
+    {
+      _id: ObjectId("633c270ba211aa5f7931f078"),
+      text: 'Write code',
+      done: false
+    },
+    {
+      _id: ObjectId("633c270ba211aa5f7931f079"),
+      text: 'Learn about containers',
+      done: false
+    }
+  ]
+
+Step 8: Insert a new todo
+- Inserted a new todo with the text "Increase the number of tools in my tool belt" and status `done: false` using:
+  db.todos.insertOne({
+    text: "Increase the number of tools in my tool belt",
+    done: false
+  })
+
+Step 9: Verify the new todo
+- Ran the following command to check the todos again:
+  db.todos.find({})
+- Output:
+  [
+    {
+      _id: ObjectId("633c270ba211aa5f7931f078"),
+      text: 'Write code',
+      done: false
+    },
+    {
+      _id: ObjectId("633c270ba211aa5f7931f079"),
+      text: 'Learn about containers',
+      done: false
+    },
+    {
+      _id: ObjectId("new_id_here"),
+      text: 'Increase the number of tools in my tool belt',
+      done: false
+    }
+  ]
+
+Step 10: Verify in Express app
+- Sent a GET request to `http://localhost:3000/todos` and confirmed that the new todo appeared in the response.

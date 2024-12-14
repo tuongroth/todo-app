@@ -1,0 +1,7 @@
+PS C:\part12-containers-applications-main> docker run -it ubuntu bash
+root@0406560c6030:/# apt update
+root@0406560c6030:/# apt install nano
+root@0406560c6030:/# nano /usr/src/app/index.js
+# (Inside nano, you added the line `console.log('Hello World');`)
+# After editing, you pressed CTRL + O, Enter, and then CTRL + X to save and exit nano
+root@0406560c6030:/# exit

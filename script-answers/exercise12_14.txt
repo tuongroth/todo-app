@@ -1,0 +1,51 @@
+# Start by navigating to the frontend directory
+cd todo-app/todo-frontend
+
+# Build the Docker image for the frontend
+docker build -t todo-frontend .
+
+# Running the frontend image with VITE_BACKEND_URL environment variable
+docker run -p 5173:5173 --env VITE_BACKEND_URL=http://localhost:3000 todo-frontend
+
+# Output should show the frontend running on port 5173, with communication to the backend on port 3000
+curl http://localhost:5173
+
+# If the backend is running and everything is set up, you should see the frontend application.
+# Next, test the app's functionality by opening the frontend in the browser:
+# http://localhost:5173
+
+# Now let's check if unit tests are working:
+# Navigate to the frontend project directory if you aren't there already
+cd todo-app/todo-frontend
+
+# Run the unit tests
+npm run test:unit
+
+# If the tests pass, it confirms that everything is working correctly. If there are issues, it could indicate problems with the code or tests.
+# Check if you have any issues with the package.json file, such as missing dependencies, by running:
+npm install
+
+# If there are issues during testing, resolve them by checking the console output for any failed test cases.
+
+# In case you want to ensure all build steps are included and no issues during the build process, check for successful Docker image building:
+docker build -t todo-frontend .
+
+# If you encounter an error during this step, ensure you have a valid Dockerfile in your `todo-app/todo-frontend` directory.
+# A typical Dockerfile might look like:
+#
+# FROM node:16 AS build-stage
+# WORKDIR /app
+# COPY package*.json ./
+# RUN npm install
+# COPY . .
+# RUN npm run build
+# FROM nginx:alpine AS production-stage
+# COPY --from=build-stage /app/dist /usr/share/nginx/html
+# EXPOSE 80
+# CMD ["nginx", "-g", "daemon off;"]
+
+# Once the frontend is working and Docker setup is correct, test the complete flow by adding some todos and checking the stats
+# Verify that the counter increases in Redis when new todos are created
+docker exec -it redis-container-name redis-cli
+KEYS *
+GET <your-key>

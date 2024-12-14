@@ -1,0 +1,13 @@
+@echo off
+echo Pruning existing Docker containers, networks, and build cache...
+docker system prune -f
+
+echo Building and starting the frontend development environment...
+docker compose -f docker-compose.dev.yml up --build -d
+
+echo Logs for the frontend container:
+for /f "tokens=*" %%i in ('docker ps --filter "name=todo-frontend-frontend" -q') do set CONTAINER_ID=%%i
+docker logs %CONTAINER_ID%
+
+echo Setup complete. To attach to the container, use:
+echo docker exec -it %CONTAINER_ID% bash

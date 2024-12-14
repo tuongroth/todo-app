@@ -1,0 +1,12 @@
+# Ensure Docker is running
+docker --version
+docker-compose --version
+
+# Navigate to the directory where docker-compose.yml or docker-compose.dev.yml is located
+cd C:\part12-containers-applications-main\todo-app\todo-backend
+
+# Run docker-compose with build and up
+docker-compose -f docker-compose.dev.yml up --build
+
+# Or, if you are using the production version of the docker-compose file, use:
+# docker-compose -f docker-compose.yml up --build

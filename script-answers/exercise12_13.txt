@@ -1,0 +1,25 @@
+# Use the official Node.js image
+FROM node:18-alpine
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json (or yarn.lock)
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Set the VITE_BACKEND_URL environment variable (replace with your backend URL if different)
+ENV VITE_BACKEND_URL=http://localhost:3000
+
+# Expose the port the app will run on
+EXPOSE 5173
+
+# Build and start the app
+RUN npm run build
+
+CMD ["npm", "run", "preview"]

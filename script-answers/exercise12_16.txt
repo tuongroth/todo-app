@@ -1,0 +1,33 @@
+# Check if port 3000 is in use
+$port = 3000
+$process = netstat -ano | findstr ":$port"
+
+if ($process) {
+    Write-Host "Port $port is already in use. Identifying the process..."
+
+    # Extract the PID of the process using port 3000
+    $pid = $process.Split()[-1]
+
+    Write-Host "Process ID using port $port: $pid"
+
+    # Optionally, terminate the process using the port
+    $terminateProcess = Read-Host "Do you want to terminate this process? (Y/N)"
+
+    if ($terminateProcess -eq "Y") {
+        Stop-Process -Id $pid
+        Write-Host "Process $pid has been terminated."
+    } else {
+        Write-Host "Skipping process termination. Proceeding with a different port..."
+        # Suggest running on a different port (example: 4000)
+        $newPort = 4000
+        Write-Host "Try running the container on port $newPort using the command:"
+        Write-Host "docker run -p $newPort:3000 todo-backend"
+        exit
+    }
+} else {
+    Write-Host "Port $port is available."
+}
+
+# Run the Docker container on port 3000
+Write-Host "Running Docker container..."
+docker run -p 3000:3000 todo-backend

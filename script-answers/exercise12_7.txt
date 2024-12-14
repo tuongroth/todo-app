@@ -1,0 +1,44 @@
+Exercise 12.7: Implement Routes for GET and PUT /todos/:id
+
+In this exercise, we are required to add proper routes to the todo application for two functionalities:
+1. **GET /todos/:id** – Retrieve a specific todo by its ID.
+2. **PUT /todos/:id** – Update a specific todo by its ID.
+
+### Steps to Implement:
+
+1. **GET /todos/:id Route:**
+   - The goal is to retrieve a specific todo based on its `id`. The `id` is passed as a URL parameter (`:id`).
+   - The route handler should find the todo in the database using the provided `id`, and if found, return it.
+   - If the todo is not found, return a 404 error with a message stating "Todo not found".
+
+2. **PUT /todos/:id Route:**
+   - The goal is to update an existing todo. The updated data (e.g., `text`, `done` status) will be provided in the request body.
+   - The route handler should find the todo by `id`, then update the fields in the database.
+   - After updating the todo, return the updated todo as a response.
+   - If the todo is not found, return a 404 error with a message stating "Todo not found".
+
+---
+
+### Code Implementation:
+
+In the `todo-backend/routes/todos.js` file:
+
+#### 1. GET /todos/:id Route:
+
+```javascript
+const express = require('express');
+const router = express.Router();
+const Todo = require('../models/todo'); // Import the Todo model
+
+// GET /todos/:id - Get a single todo by its ID
+router.get('/:id', async (req, res) => {
+  try {
+    const todo = await Todo.findById(req.params.id); // Find the todo by its ID
+    if (!todo) {
+      return res.status(404).json({ message: 'Todo not found' }); // If todo doesn't exist
+    }
+    res.json(todo); // Return the todo as a response
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching todo' }); // Handle server errors
+  }
+});

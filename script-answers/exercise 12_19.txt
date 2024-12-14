@@ -1,0 +1,23 @@
+# Clean up unused Docker networks
+Write-Host "Pruning unused Docker networks..."
+docker network prune -f
+
+# Remove orphaned services when bringing down the compose stack
+Write-Host "Bringing down Docker Compose stack and removing orphaned services..."
+docker-compose down --remove-orphans
+
+# Optionally, remove all stopped containers
+Write-Host "Removing all stopped Docker containers..."
+docker container prune -f
+
+# Optionally, remove all unused images
+Write-Host "Removing unused Docker images..."
+docker image prune -a -f
+
+# Optionally, remove all unused volumes
+Write-Host "Removing unused Docker volumes..."
+docker volume prune -f
+
+# Optional: Inspect Docker networks
+Write-Host "Listing Docker networks..."
+docker network ls

@@ -1,0 +1,56 @@
+# 1. Fix Warning in `docker-compose.dev.yml`
+# Open the `docker-compose.dev.yml` file and remove the `version` field.
+# The final file should look like this:
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "3456:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: the_username
+      MONGO_INITDB_ROOT_PASSWORD: the_password
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+# 2. Pull Redis and Mongo images manually
+# Run these commands to pull the Redis and Mongo images manually, especially if pulling takes a long time.
+
+docker pull redis
+docker pull mongo
+
+# 3. Start the containers
+# Once the images are downloaded, start the containers with Docker Compose.
+
+docker compose -f docker-compose.dev.yml up
+
+# 4. Check if the containers are running
+# After the containers start, verify that they are running using this command:
+
+docker ps
+
+# 5. Verify Redis persistence
+# To check that Redis data is persisted correctly, stop and restart the containers.
+# First, stop the containers:
+
+docker-compose down
+
+# Then, start them again:
+
+docker-compose up
+
+# 6. Test Redis data persistence
+# After restarting the containers, access the Redis container and check if data is persisted.
+
+docker exec -it redis redis-cli
+
+# In Redis CLI, you can check the key (e.g., `todos_count`) to see if the data persists:
+
+get todos_count
+
+# If the data is still there, persistence is working correctly.

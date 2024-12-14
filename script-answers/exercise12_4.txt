@@ -1,0 +1,8 @@
+PS C:\part12-containers-applications-main> docker run -it ubuntu bash
+root@b8548b9faec3:/# apt update
+root@b8548b9faec3:/# apt install -y curl
+root@b8548b9faec3:/# curl -sL https://deb.nodesource.com/setup_20.x | bash
+root@b8548b9faec3:/# apt install -y nodejs
+root@b8548b9faec3:/# node /usr/src/app/index.js
+Hello World
+root@b8548b9faec3:/# exit

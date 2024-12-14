@@ -1,0 +1,43 @@
+# Exercise 12.11: Direct Redis Access Using redis-cli
+
+# 1. Go to the Redis container and access the redis-cli:
+# Run the following command to enter the Redis container and start the Redis CLI:
+docker exec -it redis redis-cli
+
+# 2. Check all the keys in Redis:
+# To list all keys in the Redis database, run:
+KEYS *
+
+# 3. Check the value of the key (e.g., `todos_count`):
+# To check the value of the key `todos_count` (or your relevant counter), run:
+GET todos_count
+
+# 4. Set the value of the counter to 9001:
+# Update the counter value to 9001 using the SET command:
+SET todos_count 9001
+
+# 5. Verify the new counter value:
+# Ensure the new value has been set by checking it again:
+GET todos_count
+
+# 6. Refresh the statistics page to ensure the new value works:
+# Open the statistics page in your browser: 
+# http://localhost:3000/statistics
+
+# 7. Create a new todo using Postman:
+# Send a POST request to add a new todo (http://localhost:3000/todos) with Postman.
+
+# 8. Check Redis to ensure the counter has been incremented:
+# Go back to the Redis CLI and check the counter value:
+GET todos_count
+
+# 9. Delete the key from Redis to test the behavior of the counter:
+# To delete the key `todos_count`:
+DEL todos_count
+
+# 10. Add a new todo again using Postman to ensure the counter works properly:
+# Add a new todo again via Postman.
+
+# 11. Verify that the counter is automatically updated:
+# Run the GET command on Redis to check the new value of the counter:
+GET todos_count
