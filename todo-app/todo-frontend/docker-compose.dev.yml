@@ -1,0 +1,13 @@
+services:
+  todo-frontend:
+    build:
+      context: ./todo-frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./todo-frontend:/app
+    environment:
+      - VITE_BACKEND_URL=http://localhost:3000/api
+    depends_on:
+      - todo-backend
